@@ -1,4 +1,10 @@
 from flask import Flask
+from api import api
+from models import db
+import config
+import logging
+import os
+
 
 logging.basicConfig(level=logging.DEBUG,
                    format='[%(asctime)s]: {} %(levelname)s %(message)s'.format(os.getpid()),
@@ -20,7 +26,8 @@ def create_app():
 
    @app.route('/')
    def hello_world():
-       return 'Hello, World!'
+      return 'Hello, World!'
+
    return app
 
 

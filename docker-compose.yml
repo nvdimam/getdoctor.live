@@ -29,7 +29,7 @@ services:
      - migration
  api-worker:
    build: .
-   command: celery worker --workdir=. -A tasks.celery --loglevel=info
+   command: celery -A tasks.celery worker --workdir=.  --loglevel=info
    environment:
      - APP_ENV=${APP_ENV}
    depends_on:
@@ -38,7 +38,7 @@ services:
      - migration
  api-beat:
    build: .
-   command: celery beat -A tasks.celery --loglevel=info
+   command: celery -A tasks.celery  beat --loglevel=info
    environment:
      - APP_ENV=${APP_ENV}
    depends_on:
