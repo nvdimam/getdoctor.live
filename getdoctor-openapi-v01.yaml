@@ -1,0 +1,290 @@
+openapi: 3.0.1
+info:
+  title: getdoctor.live
+  description: Getdoctor Live API
+  version: '0.1'
+servers:
+  - url: 'https://www.getdoctor.live/_functions'
+  - url: 'http://www.getdoctor.live/_functions'
+paths:
+  /departments/{lang}/{cat}/:
+    get:
+      description: List of the Departments
+      parameters: 
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [en, he, ru]
+        - name: cat
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [Adult, Pediatric, Other]
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: 'http://www.getdoctor.live'
+    servers:
+      - url: 'http://www.getdoctor.live'
+  /department/{id}:
+    get:
+      description: Auto generated using Swagger Inspector
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Department'
+      servers:
+        - url: 'http://www.getdoctor.live'
+    servers:
+      - url: 'http://www.getdoctor.live'
+  /consultation:
+    post:
+      description: Add new service request
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+               $ref: '#/components/schemas/Consultation_Request'
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+  /consultations/{status}:
+    get:
+      description: Auto generated using Swagger Inspector
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [new, doctor_approved, sheduled, occured, cancelled]
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Consultation'
+      servers:
+        - url: 'https://www.getdoctor.live'
+    servers:
+      - url: 'https://www.getdoctor.live'
+  /register:
+    post:
+      description: Auto generated using Swagger Inspector
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                password:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+            examples:
+              '0':
+                value: >
+                  { "email": "test6@mirkin.me", "password": "Doctor123",
+                  "firstName": "Dima", "lastName": "Tester6", "phone":
+                  "0501231235" }
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              
+      servers:
+        - url: 'https://www.getdoctor.live'
+    servers:
+      - url: 'https://www.getdoctor.live'
+  /login:
+    post:
+      description: Auto generated using Swagger Inspector
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                email:
+                  type: string
+            examples:
+              '0':
+                value: >
+                  { "email": "dima.mirkin@getdoctor.live", "password":
+                  "Doctor123" }
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+      servers:
+        - url: 'https://www.getdoctor.live'
+    servers:
+      - url: 'https://www.getdoctor.live'
+components:
+  schemas:  
+    Consultation_Request:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email
+          format: email
+        phone:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        priceRange:
+          type: string
+          enum: [ "500", "1000", "1500", "NONE" ]
+        description:
+          type: string
+        serviceId:
+          type: string
+        docLink:
+          type: string
+          description: Link documents
+          format: url
+        country:
+          type: string
+        translationService:
+          type: boolean
+    Consultation:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Object Id
+          format: uuid
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+        request: 
+          $ref: '#/components/schemas/Consultation_Request'
+        slot: 
+          $ref: '#/components/schemas/Consultation_slot'
+        service:
+          $ref: '#/components/schemas/Consultation_service'
+        doctor: 
+          $ref: '#/components/schemas/Consultation_doctor' 
+        status:
+          type: string
+          enum: [NEW, DOCTOR_APPROVED, SCHEDULED, DONE, CANCELLED]
+        price:
+          type: number
+        currency:
+          type: string 
+    LoginResponse:
+      type: object
+      properties:
+        approved:
+          type: boolean
+        token:
+          type: string
+        role:
+          type: string
+        displayName:
+          type: string
+    Department:
+      type: object
+      properties:
+        title:
+          type: string
+        image:
+          type: string
+          format: url
+        desc:
+          type: string
+        service:
+          $ref: '#/components/schemas/Consultation_service'
+    Consultation_service:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Service Id
+          format: uuid
+        serviceName:
+          type: string
+    Consultation_doctor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+    Consultation_slot:
+      type: object
+      properties:
+        doctorId:
+          type: string
+        serviceId: 
+          type: string
+        startDateTime:
+          type: string
+          format: date-time
+        endDateTime:
+          type: string
+          format: date-time
+    OperationResponse:
+      type: object
+      properties:
+        status: 
+          type: string
+          enum: [success, error]
+        message:
+          type: string
