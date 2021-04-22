@@ -6,10 +6,23 @@ services:
      - RABBITMQ_DEFAULT_USER=rabbit_user
      - RABBITMQ_DEFAULT_PASS=rabbit_password
  db-postgres:
-   image: "postgres:11.2"
-   environment:
-     - POSTGRES_USER=db_user
-     - POSTGRES_PASSWORD=db_password
+  image: postgres:13.1
+  healthcheck:
+    test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root" ]
+    timeout: 45s
+    interval: 10s
+    retries: 10
+  restart: always
+  environment:
+    - POSTGRES_USER=root
+    - POSTGRES_PASSWORD=DB4s21XogYkW
+    - APP_DB_USER=getdoctor_app
+    - APP_DB_PASS=b4h34eP9MYQ2
+    - APP_DB_NAME=getdoctor
+  volumes:
+    - ./db:/docker-entrypoint-initdb.d/
+  ports:
+    - 5432:5432
  migration:
    build: .
    environment:

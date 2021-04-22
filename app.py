@@ -1,6 +1,7 @@
 from flask import Flask
 from api import api
 from models import db
+from flask_migrate import Migrate
 import config
 import logging
 import os
@@ -12,18 +13,19 @@ logging.basicConfig(level=logging.DEBUG,
                    handlers=[logging.StreamHandler()])
 
 logger = logging.getLogger()
-
+migrate = Migrate()
 
 def create_app():
+
    logger.info(f'Starting app in {config.APP_ENV} environment')
    app = Flask(__name__)
    app.config.from_object('config')
    api.init_app(app)
    # initialize SQLAlchemy
    db.init_app(app)
+   migrate.init_app(app,db)
 
    # define hello world page
-
    @app.route('/')
    def hello_world():
       return 'Hello, World!'
