@@ -15,7 +15,7 @@ class DevConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
    FLASK_ENV = 'production'
-   SQLALCHEMY_DATABASE_URI = 'postgresql://getdoctor_app:db_password@db-postgres:5432/getdoctor'
+   SQLALCHEMY_DATABASE_URI = 'postgresql://getdoctor_app:b4h34eP9MYQ2@db-postgres:5432/getdoctor'
    SQLALCHEMY_TRACK_MODIFICATIONS = False
    CELERY_BROKER = 'pyamqp://rabbit_user:rabbit_password@broker-rabbitmq//'
    CELERY_RESULT_BACKEND = 'rpc://rabbit_user:rabbit_password@broker-rabbitmq//'
