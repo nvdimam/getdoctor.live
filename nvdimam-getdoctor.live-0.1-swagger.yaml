@@ -31,10 +31,6 @@ paths:
               schema:
                 type: string
               examples: {}
-      servers:
-        - url: 'http://www.getdoctor.live'
-    servers:
-      - url: 'http://www.getdoctor.live'
   /department/{id}:
     get:
       description: Auto generated using Swagger Inspector
@@ -52,11 +48,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Department'
-      servers:
-        - url: 'http://www.getdoctor.live'
-    servers:
-      - url: 'http://www.getdoctor.live'
-  /consultation:
+  /consultation/:
     post:
       description: Add new service request
       parameters:
@@ -70,15 +62,21 @@ paths:
             schema:
                $ref: '#/components/schemas/Consultation_Request'
       responses:
-        '200':
-          description: Auto generated using Swagger Inspector
+        '201':
+          description: Operation completed successfully
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/OperationResponse'
+        '500':
+          description: Operation failed
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/OperationResponse'
   /consultations/{status}:
     get:
-      description: Auto generated using Swagger Inspector
+      description: Get consultations list by status
       parameters:
         - name: x-access-token
           in: header
@@ -99,11 +97,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Consultation'
-      servers:
-        - url: 'https://www.getdoctor.live'
-    servers:
-      - url: 'https://www.getdoctor.live'
-  /register:
+  /register/:
     post:
       description: Auto generated using Swagger Inspector
       requestBody:
@@ -140,7 +134,7 @@ paths:
         - url: 'https://www.getdoctor.live'
     servers:
       - url: 'https://www.getdoctor.live'
-  /login:
+  /login/:
     post:
       description: Auto generated using Swagger Inspector
       requestBody:
@@ -184,12 +178,12 @@ components:
           type: string
         lastName:
           type: string
-        priceRange:
+        priceLimit:
           type: string
           enum: [ "500", "1000", "1500", "NONE" ]
         description:
           type: string
-        serviceId:
+        service:
           type: string
         docLink:
           type: string
@@ -197,7 +191,7 @@ components:
           format: url
         country:
           type: string
-        translationService:
+        translation:
           type: boolean
     Consultation:
       type: object
@@ -241,11 +235,15 @@ components:
     Department:
       type: object
       properties:
+        id:
+          type: string
         title:
           type: string
         image:
           type: string
           format: url
+        shortDesc:
+          type: string
         desc:
           type: string
         service:
@@ -270,10 +268,6 @@ components:
     Consultation_slot:
       type: object
       properties:
-        doctorId:
-          type: string
-        serviceId: 
-          type: string
         startDateTime:
           type: string
           format: date-time

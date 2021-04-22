@@ -2,9 +2,9 @@ FROM python:3.7.2
 
 RUN pip install pipenv
 
-ADD . /flask-deploy
+ADD . /getdoctor.live
 
-WORKDIR /flask-deploy
+WORKDIR /getdoctor.live
 
 RUN pipenv install --system --skip-lock
 
