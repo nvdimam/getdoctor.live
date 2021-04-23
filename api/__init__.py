@@ -21,6 +21,7 @@ class DataProcessingAPI(Resource):
 @celery.task()
 def process_data():
    time.sleep(60)
+   return { 'success': True, 'data': "OK"  }
 
 
 # data processing endpoint
