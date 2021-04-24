@@ -26,5 +26,8 @@ class TestConfig(BaseConfig):
    TESTING = True
    DEBUG = True
 
+   SQLALCHEMY_TRACK_MODIFICATIONS = False
+   SQLALCHEMY_DATABASE_URI = 'postgresql://getdoctor_app:b4h34eP9MYQ2@localhost:5432/getdoctor'
    # make celery execute tasks synchronously in the same process
+   CELERY_BROKER = ''
    CELERY_ALWAYS_EAGER = True

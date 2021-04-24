@@ -28,6 +28,7 @@ services:
    build: .
    environment:
      - APP_ENV=${APP_ENV}
+     - FLASK_APP=getdoctor.app
    command: flask db upgrade
    depends_on:
      - db-postgres
@@ -43,7 +44,7 @@ services:
      - migration
  api-worker:
    build: .
-   command: celery -A tasks.celery worker  --loglevel=info
+   command: celery -A getdoctor.tasks.celery worker  --loglevel=info
    environment:
      - APP_ENV=${APP_ENV}
    depends_on:
@@ -52,7 +53,7 @@ services:
      - migration
  api-beat:
    build: .
-   command: celery -A tasks.celery beat --loglevel=info
+   command: celery -A getdoctor.tasks.celery beat --loglevel=info
    environment:
      - APP_ENV=${APP_ENV}
    depends_on:

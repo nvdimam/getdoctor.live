@@ -1,8 +1,8 @@
 import time
 from flask import jsonify
 from flask_restful import Api, Resource
-from tasks import celery
-import config 
+from getdoctor.tasks import celery
+from getdoctor import config 
 
 api = Api(prefix=config.API_PREFIX)
 

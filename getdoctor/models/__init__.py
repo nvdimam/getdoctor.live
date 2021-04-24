@@ -13,7 +13,7 @@ class Service(db.Model):
 
 
 class Department(db.Model):
-    __tablename__ = 'results'
+    __tablename__ = 'departments'
     id = db.Column(db.String(), primary_key=True, default=lambda: str(uuid.uuid4()))
     title = db.Column(db.String())
     image = db.Column(db.String())
