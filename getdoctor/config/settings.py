@@ -9,9 +9,8 @@ class DevConfig(BaseConfig):
    DEBUG = True
    SQLALCHEMY_DATABASE_URI = 'postgresql://getdoctor_app:b4h34eP9MYQ2@localhost:5432/getdoctor'
    SQLALCHEMY_TRACK_MODIFICATIONS = False
-   CELERY_BROKER = 'pyamqp://rabbit_user:rabbit_password@broker-rabbitmq//'
-   CELERY_RESULT_BACKEND = 'rpc://rabbit_user:rabbit_password@broker-rabbitmq//'
-
+   CELERY_BROKER = 'pyamqp://guest@localhost//'
+   CELERY_RESULT_BACKEND = 'rpc://guest@localhost//'
 
 class ProductionConfig(BaseConfig):
    FLASK_ENV = 'production'
@@ -29,5 +28,5 @@ class TestConfig(BaseConfig):
    SQLALCHEMY_TRACK_MODIFICATIONS = False
    SQLALCHEMY_DATABASE_URI = 'postgresql://getdoctor_app:b4h34eP9MYQ2@localhost:5432/getdoctor'
    # make celery execute tasks synchronously in the same process
-   CELERY_BROKER = ''
-   CELERY_ALWAYS_EAGER = True
+   CELERY_BROKER = 'pyamqp://guest@localhost//'
+   #CELERY_ALWAYS_EAGER = True
